@@ -1,0 +1,17 @@
+in:
+  type: mysql
+  host: localhost
+  user: root
+  password: ""
+  database: sample
+  table: sample
+
+out: 
+  type: bigquery
+  method: append
+  auth_method: json_key
+  json_keyfile: /Users/yuemori/.ssh/api-project.json
+  dataset: ${bigquery_dataset}
+  table: ${bigquery_table}
+  auto_create_dataset: true
+  auto_create_table: true

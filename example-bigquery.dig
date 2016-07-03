@@ -1,0 +1,28 @@
+timezone: UTC
+
+_export:
+  bigquery_dataset: "sample"
+  bigquery_table: "sample${date}"
+  mysql_database: "sample"
+  mysql_table: "sample"
+  file_path: "sample_"
+  rb:
+    require: 'tasks/workflow'
+
++load_to_mysql_from_csv:
+ embulk>: config_mysql.yml
+
++load_to_bigquery_from_mysql:
+ embulk>: config_bigquery.yml
+
++notifier_result:
+  _parallel: true
+
+  +query:
+    sh>: bq query "SELECT * FROM ${bigquery_dataset}.${bigquery_table}"
+
+  +slack_notifier:
+    rb>: Task::SlackNotify.slack_notify
+    command: "bq query 'SELECT COUNT(*) FROM ${bigquery_dataset}.${bigquery_table}'"
+    channel: ${channel}
+    username: '集計結果'
