@@ -9,17 +9,20 @@ _export:
   rb:
     require: 'tasks/workflow'
 
-+load_to_mysql_from_csv:
- embulk>: config_mysql.yml
-
-+load_to_bigquery_from_mysql:
- embulk>: config_bigquery.yml
+#+load_to_mysql_from_csv:
+# embulk>: config_mysql.yml
+#
+#+load_to_bigquery_from_mysql:
+# embulk>: config_bigquery.yml
 
 +notifier_result:
   _parallel: true
 
-  +query:
+  +query1:
     sh>: bq query "SELECT * FROM ${bigquery_dataset}.${bigquery_table}"
+
+  +query2:
+    sh>: bq query "SELECT COUNT(*) FROM ${bigquery_dataset}.${bigquery_table}"
 
   +slack_notifier:
     rb>: Task::SlackNotify.slack_notify
