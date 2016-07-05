@@ -9,11 +9,11 @@ _export:
   rb:
     require: 'tasks/workflow'
 
-#+load_to_mysql_from_csv:
-# embulk>: config_mysql.yml
-#
-#+load_to_bigquery_from_mysql:
-# embulk>: config_bigquery.yml
++load_to_mysql_from_csv:
+ embulk>: config_mysql.yml
+
++load_to_bigquery_from_mysql:
+ embulk>: config_bigquery.yml
 
 +notifier_result:
   _parallel: true
